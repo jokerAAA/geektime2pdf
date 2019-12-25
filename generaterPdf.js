@@ -15,29 +15,29 @@ const config = require('./config.js');
  * @param {dirname} dirname 生成 pdf 存放的文件夹 名称
  * @param {Oject} options ejs 渲染模版的配置项
  */
-async function generaterPdf (data, filename = 'example.pdf', dirname = __dirname, options = {}) {
-    console.log('generater pdf start');
-    // console.log('data', JSON.stringify(data));
-    let browser, page;
-    try {
-        browser = await puppeteer.launch({
-            //   headless: false
-        });
-        page = await browser.newPage();
+async function generaterPdf(data, filename = 'example.pdf', dirname = __dirname, options = {}) {
+	console.log('generater pdf start');
+	// console.log('data', JSON.stringify(data));
+	let browser, page;
+	try {
+		browser = await puppeteer.launch({
+			//   headless: false
+		});
+		page = await browser.newPage();
 
-        await page.setContent(utils.renderEjsArticle2Html(data, options));
+		await page.setContent(utils.renderEjsArticle2Html(data, options));
 
-        await utils.sleep(1);
-        await page.pdf({path: path.resolve(dirname, filename)});
-        console.log('generater pdf success');
-        // 关闭浏览器资源
-        await page.close();
-        await browser.close();
-    }catch (err){
-        console.log('generater pdf err', err);
-        await page ? page.close(): '';
-        await browser ? browser.close(): '';
-    };
+		await utils.sleep(1);
+		await page.pdf({ path: path.resolve(dirname, filename) });
+		console.log('generater pdf success');
+		// 关闭浏览器资源
+		await page.close();
+		await browser.close();
+	} catch (err) {
+		console.log('generater pdf err', err);
+		await page ? page.close() : '';
+		await browser ? browser.close() : '';
+	};
 };
 
 /**

@@ -8,15 +8,15 @@ const fs = require('fs');
  * @param {String} fileDir 保存文件夹地址
  */
 const downloadAudio = async (url, fileName, fileDir = __dirname) => {
-   console.log('开始下载 音频文件: ', fileName);
-   if (!url) throw '请传入一个音频地址';
-   if (path.extname(fileName) !== '.mp3'){ // 判断传的文件后缀是否是 mp3
-      fileName = fileName + '.mp3';
-   };
-   let filePath = path.resolve(fileDir, fileName);
-   let writeStream = fs.createWriteStream(filePath);
-   superagent.get(url).pipe(writeStream);
-   console.log('结束下载 音频文件: ', fileName);
+  console.log('开始下载 音频文件: ', fileName);
+  if (!url) throw '请传入一个音频地址';
+  if (path.extname(fileName) !== '.mp3') { // 判断传的文件后缀是否是 mp3
+    fileName = fileName + '.mp3';
+  };
+  let filePath = path.resolve(fileDir, fileName);
+  let writeStream = fs.createWriteStream(filePath);
+  superagent.get(url).pipe(writeStream);
+  console.log('结束下载 音频文件: ', fileName);
 };
 
 // downloadAudio(
