@@ -18,7 +18,7 @@ async function downloadComments({ url, articleId, prev = 0, pageNumbers = 1 }) {
 		try {
 			let res = await superagent.post(config.commentUrl)
 				.set(Object.assign({}, config.commonUa, {
-					'Referer': url,
+					Referer: url,
 				})).send({
 					aid: articleId,
 					prev: prev

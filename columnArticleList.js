@@ -19,10 +19,11 @@ const downloadComment = require('./downloadComment.js');
     try {
       let res = await superagent.post(config.url)
         .set(Object.assign({}, config.commonUa, {
-          'Referer': config.columnBaseUrl + articalId,
+          Referer: config.columnBaseUrl + articalId,
         })).send({
-          'id': articalId,
-          'include_neighbors': true
+          id: articalId,
+          include_neighbors: true,
+          is_freelyread: true,
         });
       if (res.body && res.body.error && res.body.error.code) {
         console.log('error msg', res.body.error.msg);
@@ -70,12 +71,12 @@ const downloadComment = require('./downloadComment.js');
         );
       };
       // 判断是否还有下一篇文章
-      // let neighborRight = columnArticle.neighbors.right;
-      // if (neighborRight && neighborRight.id) {
-      //   articalId = neighborRight.id;
-      //   await utils.sleep(1.5);
-      //   return await getNextColumnArticleUrl();
-      // };
+      let neighborRight = columnArticle.neighbors.right;
+      if (neighborRight && neighborRight.id) {
+        articalId = neighborRight.id;
+        await utils.sleep(1.5);
+        return await getNextColumnArticleUrl();
+      };
     } catch (err) {
       console.log(`访问 地址 ${config.columnBaseUrl + articalId} err`, err.message);
     };
